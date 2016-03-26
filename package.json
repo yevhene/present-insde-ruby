@@ -1,18 +1,15 @@
 {
-  "name": "reveal.js",
-  "version": "3.2.0",
-  "description": "The HTML Presentation Framework",
-  "homepage": "http://lab.hakim.se/reveal-js",
-  "subdomain": "revealjs",
-  "main": "js/reveal.js",
+  "name": "present-inside-ruby",
+  "version": "1.0.0",
+  "description": "Presentation about Ruby insides",
+  "homepage": "https://present-inside-ruby.herokuapp.com",
   "scripts": {
     "test": "grunt test",
     "start": "grunt serve"
   },
   "author": {
-    "name": "Hakim El Hattab",
-    "email": "hakim.elhattab@gmail.com",
-    "web": "http://hakim.se"
+    "name": "Yevhen Shemet",
+    "email": "yevhene@gmail.com"
   },
   "repository": {
     "type": "git",
@@ -40,6 +37,5 @@
     "grunt-zip": "~0.17.1",
     "grunt": "~0.4.5",
     "node-sass": "~3.3.3"
-  },
-  "license": "MIT"
+  }
 }

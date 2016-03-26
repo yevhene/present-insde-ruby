@@ -4,8 +4,7 @@
   "description": "Presentation about Ruby insides",
   "homepage": "https://present-inside-ruby.herokuapp.com",
   "scripts": {
-    "test": "grunt test",
-    "start": "grunt serve"
+    "start": "node app"
   },
   "author": {
     "name": "Yevhen Shemet",

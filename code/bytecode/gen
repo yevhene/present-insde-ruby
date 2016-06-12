@@ -1,0 +1,12 @@
+#!/usr/bin/env ruby
+
+iseq = RubyVM::InstructionSequence.compile_file(ARGV.first)
+
+code = Marshal.dump iseq.to_a
+
+# Output
+filename = File.basename(ARGV.first, '.rb')
+dir = File.dirname(ARGV.first)
+File.open(File.join(dir, "#{filename}.rbb"), 'w') do |f|
+  f.write(code)
+end

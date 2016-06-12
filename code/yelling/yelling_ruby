@@ -1,0 +1,28 @@
+#!/usr/bin/env ruby
+
+require 'ruby2ruby'
+require 'ruby_parser'
+
+# Input
+code = File.open(ARGV.first, 'r').read()
+
+# Processing
+ast = RubyParser.new.process(code)
+
+ast.each_of_type(:str) do |node|
+  node[1] += '!' * 5
+end
+
+code = Ruby2Ruby.new.process(ast)
+
+# Output
+filename = File.basename(ARGV.first, '.rb')
+dir = File.dirname(ARGV.first)
+out_file = File.join(dir, "#{filename}-out.rb")
+File.open(out_file, 'w') do |f|
+  f.write(code)
+end
+
+# Executing
+puts `ruby #{out_file}`
+

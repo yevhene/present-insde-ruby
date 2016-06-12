@@ -1,0 +1,42 @@
+#!/bin/bash
+
+set -x
+set -e
+set -o pipefail
+
+rm -rf tmp
+mkdir tmp
+
+pushd tmp > /dev/null
+
+# Get and unpack ruby source
+wget https://github.com/ruby/ruby/archive/v2_3_0.tar.gz -O ruby.tar.gz
+gunzip -c ruby.tar.gz | tar xvf -
+mv ruby-2_3_0 ruby_source
+mkdir ruby
+
+pushd ruby_source > /dev/null
+
+
+# Patching
+SUPPORT_JOKE_DISABLED="#define SUPPORT_JOKE                 0"
+SUPPORT_JOKE_ENABLED="#define SUPPORT_JOKE                 1"
+
+sed -i -- "s/$SUPPORT_JOKE_DISABLED/$SUPPORT_JOKE_ENABLED/" vm_opts.h
+
+
+# Compiling
+PREFIX=`realpath ../ruby`
+
+autoconf
+./configure --prefix="$PREFIX" --disable-install-doc --enable-shared
+make
+make install
+
+popd > /dev/null
+
+popd > /dev/null
+
+# Symlink
+ln -s tmp/ruby/bin/ruby ruby_goto
+

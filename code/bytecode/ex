@@ -1,0 +1,26 @@
+#!/usr/bin/env ruby
+
+require 'fiddle'
+
+class RubyVM::InstructionSequence
+  # Retrieve Ruby Core's C-ext `iseq_load' function address
+  # iseq.c:600
+  load_fn_addr  = Fiddle::Handle::DEFAULT['rb_iseq_load']
+  # Retrieve `iseq_load' C function representation
+  load_fn       = Fiddle::Function.new(load_fn_addr,
+                                       [Fiddle::TYPE_VOIDP] * 3,
+                                       Fiddle::TYPE_VOIDP)
+
+  # Make `iseq_load' accessible as `load' class method
+  define_singleton_method(:load) do |data, parent = nil, opt = nil|
+    load_fn.call(Fiddle.dlwrap(data), parent, opt).to_value
+  end
+end
+
+code = File.open(ARGV.first, 'r').read()
+
+seq = Marshal.load code
+
+iseq = RubyVM::InstructionSequence.load seq
+
+iseq.eval

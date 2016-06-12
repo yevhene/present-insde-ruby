@@ -1,0 +1,12 @@
+#!/usr/bin/env ruby
+
+code = File.open(ARGV.first, 'r').read()
+
+RubyVM::InstructionSequence.compile_option ={
+  tailcall_optimization: true,
+  trace_instruction: false
+}
+
+iseq = RubyVM::InstructionSequence.new code
+
+iseq.eval

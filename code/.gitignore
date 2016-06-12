@@ -1,0 +1,4 @@
+tmp
+*.rbb
+*-out.rb
+goto/ruby_goto
